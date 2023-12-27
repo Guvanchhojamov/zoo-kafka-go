@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"log"
+	"time"
 )
 
 func main() {
@@ -27,6 +28,7 @@ func main() {
 			Value: []byte(value),
 		}
 		err = producer.Produce(produceMsg, nil)
+		time.Sleep(time.Second * 1)
 		if err != nil {
 			log.Fatalf("error send message: %s-  topic: %s \n", value, topic)
 		} else {
