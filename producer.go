@@ -7,18 +7,18 @@ import (
 )
 
 func main() {
-	config := kafka.ConfigMap{
-		"bootstrap.servers": "localhost:9095",
+	config := &kafka.ConfigMap{
+		"bootstrap.servers": "localhost:9092",
 	}
 	topic := "coordinators"
 
-	producer, err := kafka.NewProducer(&config)
+	producer, err := kafka.NewProducer(config)
 	if err != nil {
 		log.Fatal("error create new Producer")
 	}
 	//send messages
 	for i := 0; i < 10; i++ {
-		value := fmt.Sprintf("message-%d\n", i)
+		value := fmt.Sprintf("message-%d", i)
 		produceMsg := &kafka.Message{
 			TopicPartition: kafka.TopicPartition{
 				Topic:     &topic,
@@ -30,7 +30,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("error send message: %s-  topic: %s \n", value, topic)
 		} else {
-			fmt.Printf("Produces message: %s -  topic: %s ", value, topic)
+			fmt.Printf("Produced message: %s -  topic: %s \n", value, topic)
 		}
 	}
 
